@@ -8,6 +8,14 @@
       "SwagExample\\": "src/"
     }
   },
+  "authors": [
+    {
+      "name": "Adrian Pietrzak",
+      "email": "contact@pietrzakadrian.com",
+      "homepage": "https://pietrzakadrian.com",
+      "role": "Owner"
+    }
+  ],
   "extra": {
     "shopware-plugin-class": "SwagExample\\SwagExample",
     "label": {
