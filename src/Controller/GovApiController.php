@@ -20,13 +20,13 @@ class GovApiController extends AbstractController
         $this->govApiService = $govApiService;
     }
 
-    //todo: add swagger
     /**
      * @Route("/store-api/govapi/vat/{vatId}", name="store-api.govapi.vat", options={"seo"="false"}, methods={"GET"})
      */
     public function calculate(string $vatId): JsonResponse
     {
-        $response = $this->govApiService->getData($vatId);
+        $response = $this->govApiService->validateVATID($vatId);
+
         return new JsonResponse($response);
     }
 }

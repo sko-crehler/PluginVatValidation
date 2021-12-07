@@ -1,0 +1,15 @@
+{% sw_extends "@Storefront/storefront/component/address/address-personal-vat-id.html.twig" %}
+
+{% block component_address_form_company_vatId_input %}
+    <input type="text"
+           class="form-control{% if violationPath %} is-invalid{% endif %}"
+           id="vatIds"
+           placeholder="{{ "example.address.companyVatPlaceholder"|trans|striptags }}"
+           name="vatIds[]"
+           value="{{ activeRoute == 'frontend.account.profile.page' or (feature('FEATURE_NEXT_15957') and activeRoute == 'frontend.account.addressbook' and context.customer.guest) ? vatIds[0] : vatIds.get(0) }}">
+
+    <small class="form-text">
+        {{ "example.smallTip" | trans }}
+    </small>
+{% endblock %}
+
