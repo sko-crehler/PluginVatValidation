@@ -34,13 +34,13 @@ export default class BaseExamplePlugin extends Plugin {
     }
 
     _fetchData(vatId) {
-        ElementLoadingIndicatorUtil.create(this.$vatIds);
+        ElementLoadingIndicatorUtil.create(this.$vatIds.parentNode);
 
         this._client.get(`store-api/govapi/vat/${vatId}`, this._handleData.bind(this));
     }
 
     _handleData(response) {
-        // ElementLoadingIndicatorUtil.remove(document.body);
+        ElementLoadingIndicatorUtil.remove(this.$vatIds.parentNode);
 
         const result = JSON.parse(response);
         const newaddress = result.traderAddress.replace('\n', ', ');
