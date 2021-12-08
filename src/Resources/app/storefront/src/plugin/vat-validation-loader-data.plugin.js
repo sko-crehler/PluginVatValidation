@@ -4,7 +4,7 @@ import ElementLoadingIndicatorUtil from 'src/utility/loading-indicator/element-l
 import { checkVAT, countries } from 'jsvat';
 import { titleCase } from "./helper/typography.helper";
 
-export default class BaseExamplePlugin extends Plugin {
+export default class VatValidationLoaderDataPlugin extends Plugin {
     static options = {
         vatIdsSelector: '#vatIds',
         companyNameSelector: '#billingAddresscompany',
@@ -34,11 +34,12 @@ export default class BaseExamplePlugin extends Plugin {
         const { isValid, country } = checkVAT(event.target.value, countries);
 
         if (!isValid) {
-            return false;
+            return;
         }
 
-        this._setSelectOption(this.$companyCountry, country.name)
+        this._resetSelectOption(this.$companyCountry);
         this._fetchData(event.target.value);
+        this._setSelectOption(this.$companyCountry, country.name)
     }
 
     _fetchData(vatId) {
@@ -47,7 +48,9 @@ export default class BaseExamplePlugin extends Plugin {
         this._client.get(`store-api/company/${vatId}`, this._handleData.bind(this));
     }
 
-    _handleData(response) {
+    _handleData(response, request) {
+        console.log({response, request})
+
         ElementLoadingIndicatorUtil.remove(this.$vatIds.parentNode);
 
         this._parseData(response);
@@ -74,14 +77,22 @@ export default class BaseExamplePlugin extends Plugin {
     }
 
     _setSelectOption(element, text) {
-        for (let i = 0; i < this.$companyCountry.options.length; ++i) {
-            if (this.$companyCountry.options[i].text === text)
-                this.$companyCountry.options[i].selected = true;
+        for (let i = 0; i < element.options.length; ++i) {
+            if (element.options[i].text === text)
+                element.options[i].selected = true;
         }
     }
 
     _setInputValue(element, value, isTitleCase = false) {
         element.value = isTitleCase ? titleCase(value) : value;
+    }
+
+    _resetSelectOption(element) {
+        element.options[0].selected = true;
+    }
+
+    _resetInputValue(element) {
+        element.value = '';
     }
 }
 

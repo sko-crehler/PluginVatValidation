@@ -1,8 +1,0 @@
-{
-    "example": {
-        "smallTip": "A properly entered VAT Reg.No. should automatically populate the company name and address. Use the following format, e.g. PLXXXXXXXXX",
-        "address": {
-            "companyVatPlaceholder": "Enter VAT Reg.No...."
-        }
-    }
-}

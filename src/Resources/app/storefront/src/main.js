@@ -1,5 +1,7 @@
-import BaseExamplePlugin from './plugin/base-example.plugin.js';
+import VatValidationLoaderDataPlugin from './plugin/vat-validation-loader-data.plugin.js';
+import FormVatValidationPlugin from "./plugin/form-vat-validation.plugin";
 
 const PluginManager = window.PluginManager;
 
-PluginManager.register('BaseExamplePlugin', BaseExamplePlugin, '.register-form');
+PluginManager.register('VatValidationLoaderDataPlugin', VatValidationLoaderDataPlugin, '.register-form');
+PluginManager.override('FormValidation', FormVatValidationPlugin, '[data-form-validation]');

@@ -1,17 +1,27 @@
 {% sw_extends "@Storefront/storefront/component/address/address-personal-vat-id.html.twig" %}
 
+{% block component_address_form_company_vatId_label %}
+    <label class="form-label" for="vatIds">
+        {{ "address.companyVatLabel"|trans|sw_sanitize }}{% if config('PluginVatValidation.config.isVatRegNoRequired') %}{{ "general.required"|trans|sw_sanitize }}{% endif %}
+    </label>
+{% endblock %}
+
 {% block component_address_form_company_vatId_input %}
     <div class="form-input-wrapper">
         <input type="text"
                class="form-control{% if violationPath %} is-invalid{% endif %}"
                id="vatIds"
-               placeholder="{{ "example.address.companyVatPlaceholder"|trans|striptags }}"
+               placeholder="{{ "pluginVatValidation.address.companyVatPlaceholder"|trans|striptags }}"
                name="vatIds[]"
+               data-form-validation-vat-valid="true"
+               data-form-validation-vat-valid-message="{{ "pluginVatValidation.address.companyVatRequired"|trans|striptags }}"
+                {% if config('PluginVatValidation.config.isVatRegNoRequired') %}
+                    required="required"
+                {% endif %}
                value="{{ activeRoute == 'frontend.account.profile.page' or (feature('FEATURE_NEXT_15957') and activeRoute == 'frontend.account.addressbook' and context.customer.guest) ? vatIds[0] : vatIds.get(0) }}">
     </div>
 
-    <small class="form-text vat-tip">
-        {{ "example.smallTip" | trans }}
+    <small data-form-validation-vat-valid-text="true" class="form-text vat-tip js-validation-message">
+        {{ "pluginVatValidation.smallTip" | trans }}
     </small>
 {% endblock %}
-

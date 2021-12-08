@@ -1,15 +1,26 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample\Exception;
+namespace Plugin\VatValidation\Exception;
 
-use Exception;
+use Shopware\Core\Framework\ShopwareHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
-class CompanyNoInformationException extends Exception
+class CompanyNoInformationException extends ShopwareHttpException
 {
     public function __construct()
     {
         $message = "Company no information.";
 
-        parent::__construct($message, 400, null);
+        parent::__construct($message);
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_BAD_REQUEST;
+    }
+
+    public function getErrorCode(): string
+    {
+        return 'COMPANY_NO_INFORMATION';
     }
 }

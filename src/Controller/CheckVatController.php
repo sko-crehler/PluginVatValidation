@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample\Controller;
+namespace Plugin\VatValidation\Controller;
 
+use Plugin\VatValidation\Service\CheckVatService;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
-use SwagExample\Service\CheckVatService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,12 +21,10 @@ class CheckVatController extends AbstractController
     }
 
     /**
-     * @Route("/store-api/company/{vatId}", name="store-api.check-vat", options={"seo"="false"}, methods={"GET"})
+     * @Route("/store-api/company/{vatId}", name="store-api.vat-validation", options={"seo"="false"}, methods={"GET"})
      */
     public function checkVat(string $vatId): JsonResponse
     {
-        $response = $this->checkVatService->fetchTraderData($vatId);
-
-        return new JsonResponse($response);
+        return new JsonResponse($this->checkVatService->fetchTraderData($vatId));
     }
 }

@@ -1,8 +1,0 @@
-{
-    "example": {
-        "smallTip": "Eine korrekt eingegebene Umsatzsteuer-Identifikationsnummer sollte automatisch den Namen und die Adresse des Unternehmens ausfüllen.",
-        "address": {
-            "companyVatPlaceholder": "Enter VAT Reg.No...."
-        }
-    }
-}

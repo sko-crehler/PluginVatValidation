@@ -1,15 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample\Exception;
+namespace Plugin\VatValidation\Exception;
 
-use Exception;
+use Shopware\Core\Framework\ShopwareHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
-class ConnectErrorException extends Exception
+class ConnectErrorException extends ShopwareHttpException
 {
-    public function __construct($errorMessage = null)
+    public function __construct(string $missingSetting)
     {
-        $message = "Connect error. $errorMessage";
+        parent::__construct(
+            'Connect Error: "{{ missingSetting }}"',
+            ['missingSetting' => $missingSetting]
+        );
+    }
 
-        parent::__construct($message, 500, null);
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_INTERNAL_SERVER_ERROR;
+    }
+
+    public function getErrorCode(): string
+    {
+        return 'CONNECT_ERROR';
     }
 }

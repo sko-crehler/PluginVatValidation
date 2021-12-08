@@ -1,0 +1,12 @@
+- SOLID, DRY, KISS, PSR ✅
+- Make a custom controller ✅
+- make a service ✅
+- using plugin config ✅
+- extend storefront template ✅
+- extend javascript plugin ✅
+- create javascript plugin ✅
+- load other packages from npm ✅
+- using a snippets ✅
+- write tests
+- extend administration
+- create better readme.md

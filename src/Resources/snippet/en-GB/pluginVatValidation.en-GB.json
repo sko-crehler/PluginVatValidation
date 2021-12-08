@@ -1,0 +1,9 @@
+{
+    "pluginVatValidation": {
+        "smallTip": "A properly entered VAT Reg.No. should automatically populate the company name and address.",
+        "address": {
+            "companyVatPlaceholder": "Enter VAT Reg.No....",
+            "companyVatRequired":"VAT Reg.No. must be entered in the appropriate format, e.g: PLXXXXXXXXXX."
+        }
+    }
+}

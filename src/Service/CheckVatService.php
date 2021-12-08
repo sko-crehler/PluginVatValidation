@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample\Service;
+namespace Plugin\VatValidation\Service;
 
+use Plugin\VatValidation\Dto\TraderDataResponseDto;
+use Plugin\VatValidation\Exception\CompanyNoInformationException;
+use Plugin\VatValidation\Exception\CompanyNotValidException;
+use Plugin\VatValidation\Exception\ConnectErrorException;
 use SoapClient;
 use SoapFault;
-use SwagExample\Dto\TraderDataResponseDto;
-use SwagExample\Exception\CompanyNoInformationException;
-use SwagExample\Exception\CompanyNotValidException;
-use SwagExample\Exception\ConnectErrorException;
 
 class CheckVatService
 {
@@ -20,7 +20,7 @@ class CheckVatService
         $this->traderDataResponseDto = new TraderDataResponseDto();
     }
 
-    public function fetchTraderData($requestedVatId): ?TraderDataResponseDto
+    public function fetchTraderData(string $requestedVatId): TraderDataResponseDto
     {
         $client = new SoapClient(self::EC_URL);
 
@@ -34,18 +34,18 @@ class CheckVatService
         $params = array('countryCode' => $countryCode, 'vatNumber' => $vatNumber);
 
         try {
-            $response = $client->checkVat($params);
+            $loadedTrader = $client->checkVat($params);
 
-            if (!$response->valid) {
+            if (!$loadedTrader->valid) {
                 throw new CompanyNotValidException();
             }
 
-            if ($response->name === "---" || $response->address === "---") {
+            if ($loadedTrader->name === "---" || $loadedTrader->address === "---") {
                 throw new CompanyNoInformationException();
             }
 
-            $this->traderDataResponseDto->setTraderName($response->name);
-            $this->traderDataResponseDto->setTraderAddress($response->address);
+            $this->traderDataResponseDto->setTraderName($loadedTrader->name);
+            $this->traderDataResponseDto->setTraderAddress($loadedTrader->address);
 
             return $this->traderDataResponseDto;
         } catch (SoapFault $e) {

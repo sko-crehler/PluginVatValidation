@@ -1,6 +1,6 @@
 {
-  "name": "swag/plugin-skeleton",
-  "description": "Skeleton plugin",
+  "name": "plugin/vat-validation",
+  "description": "Vat Validation",
   "version": "1.0.0",
   "type": "shopware-platform-plugin",
   "license": "MIT",
@@ -9,22 +9,33 @@
   },
   "autoload": {
     "psr-4": {
-      "SwagExample\\": "src/"
+      "Plugin\\VatValidation\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Plugin\\VatValidation\\Test\\": "tests/"
     }
   },
   "authors": [
     {
       "name": "Adrian Pietrzak",
       "email": "contact@pietrzakadrian.com",
-      "homepage": "https://pietrzakadrian.com",
+      "homepage": "https://pietrzakadrian.com"
     }
   ],
   "extra": {
-    "shopware-plugin-class": "SwagExample\\SwagExample",
+    "shopware-plugin-class": "Plugin\\VatValidation\\PluginVatValidation",
     "copyright": "(c) by Adrian Pietrzak",
     "label": {
-      "de-DE": "Skeleton plugin",
-      "en-GB": "Skeleton plugin"
+      "de-DE": "Mehrwertsteuervalidierung",
+      "en-GB": "Vat Validation",
+      "pl-PL": "Walidacja VAT"
+    },
+    "description": {
+      "de-DE": "Europäische Mehrwertsteuervalidierung für Shopware 6",
+      "en-GB": "European Vat Validation for Shopware 6",
+      "pl-PL": "Europejska walidacja VAT dla Shopware 6"
     }
   }
 }

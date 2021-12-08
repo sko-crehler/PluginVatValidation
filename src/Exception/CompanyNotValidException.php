@@ -1,15 +1,26 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample\Exception;
+namespace Plugin\VatValidation\Exception;
 
-use Exception;
+use Shopware\Core\Framework\ShopwareHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
-class CompanyNotValidException extends Exception
+class CompanyNotValidException extends ShopwareHttpException
 {
     public function __construct()
     {
         $message = "Company is not valid.";
 
-        parent::__construct($message, 400, null);
+        parent::__construct($message);
+    }
+
+    public function getStatusCode(): int
+    {
+        return Response::HTTP_BAD_REQUEST;
+    }
+
+    public function getErrorCode(): string
+    {
+        return 'COMPANY_NOT_VALID';
     }
 }

@@ -1,0 +1,9 @@
+{
+    "pluginVatValidation": {
+        "smallTip": "Eine korrekt eingegebene Umsatzsteuer-Identifikationsnummer sollte automatisch den Namen und die Adresse des Unternehmens ausfüllen.",
+        "address": {
+            "companyVatPlaceholder": "Umsatzsteuer-Identifikationsnummer eingeben....",
+            "companyVatRequired":"Die Umsatzsteuer-Identifikationsnummer muss in dem entsprechenden Format eingegeben werden, z. B: DEXXXXXXXXX."
+        }
+    }
+}

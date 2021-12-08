@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Plugin configuration</title>
+        <title lang="de-DE">Plugin-Konfiguration</title>
+        <title lang="pl-PL">Konfiguracja pluginu</title>
+
+        <input-field type="bool">
+            <name>isVatRegNoRequired</name>
+            <label>Require vat number for company registration</label>
+            <label lang="de-DE">Umsatzsteuer-Identifikationsnummer für Unternehmensregistrierung erforderlich</label>
+            <label lang="pl-PL">Wymagany numer NIP przy rejestracji firmy</label>
+            <helpText>
+                By default, no vat number needs to be entered in Shopware 6. If you activate this option, this will be required before registering your company.
+            </helpText>
+            <helpText lang="de-DE">
+                Standardmäßig ist die Eingabe einer Mehrwertsteuernummer in Shopware 6 nicht erforderlich. Wenn Sie diese Option aktivieren, ist dies vor der Eintragung Ihres Unternehmens erforderlich.
+            </helpText>
+            <helpText lang="pl-PL">
+                Domyślnie w Shopware 6 nie jest wymagane wprowadzanie numeru vat. Aktywacja tej opcji spowoduje, że przed rejestracją firmy to będzie wymagane.
+            </helpText>
+            <defaultValue>true</defaultValue>
+        </input-field>
+    </card>
+</config>

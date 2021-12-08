@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace SwagExample;
+namespace Plugin\VatValidation;
 
 use Shopware\Core\Framework\Plugin;
 
-class SwagExample extends Plugin
+class PluginVatValidation extends Plugin
 {
 }
