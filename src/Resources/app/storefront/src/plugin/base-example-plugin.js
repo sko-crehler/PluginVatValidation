@@ -1,6 +1,7 @@
 import Plugin from 'src/plugin-system/plugin.class';
 import StoreApiClient from 'src/service/store-api-client.service';
 import ElementLoadingIndicatorUtil from 'src/utility/loading-indicator/element-loading-indicator.util';
+import { checkVAT, countries } from 'jsvat';
 
 export default class BaseExamplePlugin extends Plugin {
     static options = {
@@ -9,7 +10,8 @@ export default class BaseExamplePlugin extends Plugin {
         companyAddressSelector: '#billingAddressAddressStreet',
         companyZipcodeSelector: '#billingAddressAddressZipcode',
         companyCitySelector: '#billingAddressAddressCity',
-        isLoading: '',
+        companyCountrySelector: '#billingAddressAddressCountry',
+        vatTipSelector: '.vat-tip',
     }
 
     init() {
@@ -19,6 +21,9 @@ export default class BaseExamplePlugin extends Plugin {
         this.$companyAddress = this.el.querySelector(this.options.companyAddressSelector);
         this.$companyZipcode = this.el.querySelector(this.options.companyZipcodeSelector);
         this.$companyCity = this.el.querySelector(this.options.companyCitySelector);
+        this.$companyCountry = this.el.querySelector(this.options.companyCountrySelector);
+        this.$vatTip = this.el.querySelector(this.options.vatTipSelector);
+        this.$vatTipDefaultContent = this.$vatTip.textContent;
 
         this._registerEvents();
     }
@@ -28,45 +33,47 @@ export default class BaseExamplePlugin extends Plugin {
     }
 
     _onChange(event) {
-        // if (this._validateNip(event.target.value)) {
-            this._fetchData(event.target.value);
-        // }
+        console.log(checkVAT(event.target.value, countries));
+
+        if (!checkVAT(event.target.value, countries).isValid) {
+            return;
+        }
+
+        this._fetchData(event.target.value);
     }
 
     _fetchData(vatId) {
         ElementLoadingIndicatorUtil.create(this.$vatIds.parentNode);
 
-        this._client.get(`store-api/govapi/vat/${vatId}`, this._handleData.bind(this));
+        this._client.get(`store-api/company/${vatId}`, this._handleData.bind(this));
     }
 
     _handleData(response) {
         ElementLoadingIndicatorUtil.remove(this.$vatIds.parentNode);
 
+        this._parseData(response);
+    }
+
+    _parseData(response) {
         const result = JSON.parse(response);
-        const newaddress = result.traderAddress.replace('\n', ', ');
-        const [, address, zipCode, city] = newaddress.match(/^([^,]+), (\S+) ([^,]+)$/);
+
+        if (!result.traderAddress || !result.traderName) {
+            throw new Error(`Failed to parse vat validation info from VIES response`);
+        }
+
+        const partedTraderAddress = result.traderAddress.replace(/\n/g, ', ');
+        const [, address, zipCode, city] = partedTraderAddress.match(/^([^,]+), (\S+) ([^,]+)$/);
+
+        if (!address || !zipCode || !city) {
+            throw new Error(`Failed to parse vat validation info from VIES response`);
+        }
 
         this.$companyName.value = result.traderName;
         this.$companyAddress.value = this._titleCase(address);
         this.$companyZipcode.value = zipCode;
         this.$companyCity.value = this._titleCase(city);
-    }
 
-    _validateNip(nip) {
-        if (typeof nip === "number") {
-            nip = nip.toString();
-        } else {
-            nip = nip.replace(/-/g, "");
-        }
-
-        if (nip.length !== 10) {
-            return false;
-        }
-
-        const nipArray = nip.split("").map(value => parseInt(value));
-        const checkSum = (6 * nipArray[0] + 5 * nipArray[1] + 7 * nipArray[2] + 2 * nipArray[3] + 3 * nipArray[4] + 4 * nipArray[5] + 5 * nipArray[6] + 6 * nipArray[7] + 7 * nipArray[8]) % 11;
-
-        return nipArray[9] == checkSum;
+        this.$vatTip.classList.add('has-success');
     }
 
     _titleCase(str) {
