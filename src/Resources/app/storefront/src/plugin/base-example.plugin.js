@@ -37,7 +37,7 @@ export default class BaseExamplePlugin extends Plugin {
             return false;
         }
 
-        this._setCompanyCountryOption(country.name)
+        this._setSelectOption(this.$companyCountry, country.name)
         this._fetchData(event.target.value);
     }
 
@@ -67,17 +67,21 @@ export default class BaseExamplePlugin extends Plugin {
             throw new Error(`Failed to parse vat validation info from VIES response`);
         }
 
-        this.$companyName.value = result.traderName;
-        this.$companyAddress.value = titleCase(address);
-        this.$companyZipcode.value = zipCode;
-        this.$companyCity.value = titleCase(city);
+        this._setInputValue(this.$companyName, result.traderName);
+        this._setInputValue(this.$companyAddress, address, true);
+        this._setInputValue(this.$companyZipcode, zipCode);
+        this._setInputValue(this.$companyCity, city, true);
     }
 
-    _setCompanyCountryOption(text) {
+    _setSelectOption(element, text) {
         for (let i = 0; i < this.$companyCountry.options.length; ++i) {
             if (this.$companyCountry.options[i].text === text)
                 this.$companyCountry.options[i].selected = true;
         }
+    }
+
+    _setInputValue(element, value, isTitleCase = false) {
+        element.value = isTitleCase ? titleCase(value) : value;
     }
 }
 
