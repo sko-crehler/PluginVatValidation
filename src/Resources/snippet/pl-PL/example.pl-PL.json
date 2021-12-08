@@ -1,6 +1,6 @@
 {
     "example": {
-        "smallTip": "Prawidłowo wpisany VAT Reg.No. powinien automatycznie uzupełnić nazwę i adres firmy.",
+        "smallTip": "Prawidłowo wpisany VAT Reg.No. powinien automatycznie uzupełnić nazwę i adres firmy. Użyj formatu np. PLXXXXXXXXXX",
         "address": {
             "companyVatPlaceholder": "Enter VAT Reg.No...."
         }

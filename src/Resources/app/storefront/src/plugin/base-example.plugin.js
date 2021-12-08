@@ -2,7 +2,7 @@ import Plugin from 'src/plugin-system/plugin.class';
 import StoreApiClient from 'src/service/store-api-client.service';
 import ElementLoadingIndicatorUtil from 'src/utility/loading-indicator/element-loading-indicator.util';
 import { checkVAT, countries } from 'jsvat';
-import titleCase from "./helper/typography.helper";
+import { titleCase } from "./helper/typography.helper";
 
 export default class BaseExamplePlugin extends Plugin {
     static options = {
@@ -31,12 +31,13 @@ export default class BaseExamplePlugin extends Plugin {
     }
 
     _onChange(event) {
-        console.log(checkVAT(event.target.value, countries));
+        const { isValid, country } = checkVAT(event.target.value, countries);
 
-        if (!checkVAT(event.target.value, countries).isValid) {
-            return;
+        if (!isValid) {
+            return false;
         }
 
+        this._setCompanyCountryOption(country.name)
         this._fetchData(event.target.value);
     }
 
@@ -70,6 +71,13 @@ export default class BaseExamplePlugin extends Plugin {
         this.$companyAddress.value = titleCase(address);
         this.$companyZipcode.value = zipCode;
         this.$companyCity.value = titleCase(city);
+    }
+
+    _setCompanyCountryOption(text) {
+        for (let i = 0; i < this.$companyCountry.options.length; ++i) {
+            if (this.$companyCountry.options[i].text === text)
+                this.$companyCountry.options[i].selected = true;
+        }
     }
 }
 
