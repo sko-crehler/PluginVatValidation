@@ -1,12 +1,7 @@
-- SOLID, DRY, KISS, PSR ✅
-- Make a custom controller ✅
-- make a service ✅
-- using plugin config ✅
-- extend storefront template ✅
-- extend javascript plugin ✅
-- create javascript plugin ✅
-- load other packages from npm ✅
-- using a snippets ✅
-- write tests
-- extend administration
-- create better readme.md
+# PluginVatValidation
+
+## An integration for [Shopware 6](https://github.com/shopware/platform) to validate european VAT number in register company.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.

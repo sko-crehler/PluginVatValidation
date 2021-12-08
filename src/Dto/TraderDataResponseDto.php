@@ -2,11 +2,22 @@
 
 namespace Plugin\VatValidation\Dto;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(schema="plugin_vat_validation_response")
+ */
 class TraderDataResponseDto
 {
-    public string $traderName;
+    /**
+     * @OA\Property(type="string")
+     */
+    protected string $traderName;
 
-    public string $traderAddress;
+    /**
+     * @OA\Property(type="string")
+     */
+    protected string $traderAddress;
 
     /**
      * @return string

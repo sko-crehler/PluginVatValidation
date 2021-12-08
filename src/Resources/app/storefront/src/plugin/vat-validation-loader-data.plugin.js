@@ -6,7 +6,7 @@ import { titleCase } from "./helper/typography.helper";
 
 export default class VatValidationLoaderDataPlugin extends Plugin {
     static options = {
-        vatIdsSelector: '#vatIds',
+        companyVatIdSelector: '#vatIds',
         companyNameSelector: '#billingAddresscompany',
         companyAddressSelector: '#billingAddressAddressStreet',
         companyZipcodeSelector: '#billingAddressAddressZipcode',
@@ -16,7 +16,7 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
 
     init() {
         this._client = new StoreApiClient();
-        this.$vatIds = this.el.querySelector(this.options.vatIdsSelector);
+        this.$companyVatId = this.el.querySelector(this.options.companyVatIdSelector);
         this.$companyName = this.el.querySelector(this.options.companyNameSelector);
         this.$companyAddress = this.el.querySelector(this.options.companyAddressSelector);
         this.$companyZipcode = this.el.querySelector(this.options.companyZipcodeSelector);
@@ -27,59 +27,63 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
     }
 
     _registerEvents() {
-        this.$vatIds.addEventListener('change', this._onChange.bind(this));
+        this.$companyVatId.addEventListener('change', this._onChange.bind(this));
     }
 
     _onChange(event) {
-        const { isValid, country } = checkVAT(event.target.value, countries);
+        const field = event.target;
+        const value = field.value.trim();
+        const { isValid, country } = checkVAT(value, countries);
 
         if (!isValid) {
             return;
         }
 
-        this._resetSelectOption(this.$companyCountry);
-        this._fetchData(event.target.value);
+        this._resetAllCompanyRegistrationValues();
+        this._fetchData(value);
         this._setSelectOption(this.$companyCountry, country.name)
     }
 
     _fetchData(vatId) {
-        ElementLoadingIndicatorUtil.create(this.$vatIds.parentNode);
+        ElementLoadingIndicatorUtil.create(this.$companyVatId.parentNode);
 
         this._client.get(`store-api/company/${vatId}`, this._handleData.bind(this));
     }
 
     _handleData(response, request) {
-        console.log({response, request})
+        ElementLoadingIndicatorUtil.remove(this.$companyVatId.parentNode);
 
-        ElementLoadingIndicatorUtil.remove(this.$vatIds.parentNode);
+        if (request.status >= 400) {
+            throw new Error(`Failed to parse vat validation info from VIES response`);
+        }
 
         this._parseData(response);
     }
 
     _parseData(response) {
-        const result = JSON.parse(response);
+        const { traderName, traderAddress } = JSON.parse(response);
+        const formattedTraderAddress = traderAddress.replace(/\n/g, ', ');
+        const [, address, zipCode, city] = formattedTraderAddress.match(/^([^,]+), (\S+) ([^,]+)$/);
 
-        if (!result.traderAddress || !result.traderName) {
-            throw new Error(`Failed to parse vat validation info from VIES response`);
-        }
-
-        const partedTraderAddress = result.traderAddress.replace(/\n/g, ', ');
-        const [, address, zipCode, city] = partedTraderAddress.match(/^([^,]+), (\S+) ([^,]+)$/);
-
-        if (!address || !zipCode || !city) {
-            throw new Error(`Failed to parse vat validation info from VIES response`);
-        }
-
-        this._setInputValue(this.$companyName, result.traderName);
+        this._setInputValue(this.$companyName, traderName);
         this._setInputValue(this.$companyAddress, address, true);
         this._setInputValue(this.$companyZipcode, zipCode);
         this._setInputValue(this.$companyCity, city, true);
     }
 
+    _resetAllCompanyRegistrationValues() {
+        this._resetInputValue(this.$companyName);
+        this._resetInputValue(this.$companyAddress);
+        this._resetInputValue(this.$companyZipcode);
+        this._resetInputValue(this.$companyCity);
+        this._resetSelectOption(this.$companyCountry);
+    }
+
     _setSelectOption(element, text) {
         for (let i = 0; i < element.options.length; ++i) {
-            if (element.options[i].text === text)
+            if (element.options[i].text === text) {
                 element.options[i].selected = true;
+            }
         }
     }
 
