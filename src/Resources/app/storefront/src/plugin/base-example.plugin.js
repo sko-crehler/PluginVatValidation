@@ -2,6 +2,7 @@ import Plugin from 'src/plugin-system/plugin.class';
 import StoreApiClient from 'src/service/store-api-client.service';
 import ElementLoadingIndicatorUtil from 'src/utility/loading-indicator/element-loading-indicator.util';
 import { checkVAT, countries } from 'jsvat';
+import titleCase from "./helper/typography.helper";
 
 export default class BaseExamplePlugin extends Plugin {
     static options = {
@@ -11,7 +12,6 @@ export default class BaseExamplePlugin extends Plugin {
         companyZipcodeSelector: '#billingAddressAddressZipcode',
         companyCitySelector: '#billingAddressAddressCity',
         companyCountrySelector: '#billingAddressAddressCountry',
-        vatTipSelector: '.vat-tip',
     }
 
     init() {
@@ -22,8 +22,6 @@ export default class BaseExamplePlugin extends Plugin {
         this.$companyZipcode = this.el.querySelector(this.options.companyZipcodeSelector);
         this.$companyCity = this.el.querySelector(this.options.companyCitySelector);
         this.$companyCountry = this.el.querySelector(this.options.companyCountrySelector);
-        this.$vatTip = this.el.querySelector(this.options.vatTipSelector);
-        this.$vatTipDefaultContent = this.$vatTip.textContent;
 
         this._registerEvents();
     }
@@ -69,17 +67,9 @@ export default class BaseExamplePlugin extends Plugin {
         }
 
         this.$companyName.value = result.traderName;
-        this.$companyAddress.value = this._titleCase(address);
+        this.$companyAddress.value = titleCase(address);
         this.$companyZipcode.value = zipCode;
-        this.$companyCity.value = this._titleCase(city);
-
-        this.$vatTip.classList.add('has-success');
-    }
-
-    _titleCase(str) {
-        return str.split(' ').map(function(val){
-            return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
-        }).join(' ');
+        this.$companyCity.value = titleCase(city);
     }
 }
 

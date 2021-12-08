@@ -1,4 +1,4 @@
-import BaseExamplePlugin from './plugin/base-example-plugin.js';
+import BaseExamplePlugin from './plugin/base-example.plugin.js';
 
 const PluginManager = window.PluginManager;
 

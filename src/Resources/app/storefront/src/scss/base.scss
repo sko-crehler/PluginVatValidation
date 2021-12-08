@@ -10,13 +10,3 @@
     }
   }
 }
-
-.vat-tip {
-  &.has-error {
-    color: $danger;
-  }
-
-  &.has-success {
-    color: $success;
-  }
-}
