@@ -1,6 +1,6 @@
 # PluginVatValidation
 
-## An integration for [Shopware 6](https://github.com/shopware/platform) to validate european VAT number in register company.
+## An integration for [Shopware 6](https://github.com/shopware/platform) to validate european VAT number when registering an account as commercial.
 
 ## Description
 
