@@ -9,9 +9,9 @@
 
 namespace Plugin\VatValidation\Service;
 
-use Plugin\VatValidation\Dto\TraderDataResponseDto;
+use Plugin\VatValidation\Struct\TraderStruct;
 
-interface CheckVatServiceInterface
+interface CheckVatInterface
 {
-    public function fetchTraderData(string $requestedVatId): ?TraderDataResponseDto;
+    public function fetchTraderData(string $requestedVatId): ?TraderStruct;
 }

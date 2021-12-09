@@ -9,9 +9,9 @@
 namespace Plugin\VatValidation\Controller;
 
 use OpenApi\Annotations as OA;
-use Plugin\VatValidation\Service\CheckVatServiceInterface;
+use Plugin\VatValidation\Response\VatValidationResponse;
+use Plugin\VatValidation\Service\CheckVatInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,9 +20,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CheckVatController extends AbstractController
 {
-    private CheckVatServiceInterface $checkVatService;
+    private CheckVatInterface $checkVatService;
 
-    public function __construct(CheckVatServiceInterface $checkVatService)
+    public function __construct(CheckVatInterface $checkVatService)
     {
         $this->checkVatService = $checkVatService;
     }
@@ -62,8 +62,8 @@ class CheckVatController extends AbstractController
      * )
      * @Route("/store-api/company/{vatId}", name="store-api.vat-validation", options={"seo"="false"}, methods={"GET"})
      */
-    public function checkVat(string $vatId): JsonResponse
+    public function checkVat(string $vatId): VatValidationResponse
     {
-        return new JsonResponse($this->checkVatService->fetchTraderData($vatId));
+        return new VatValidationResponse($this->checkVatService->fetchTraderData($vatId));
     }
 }

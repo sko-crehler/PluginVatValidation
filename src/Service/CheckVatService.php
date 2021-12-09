@@ -9,11 +9,13 @@
 namespace Plugin\VatValidation\Service;
 
 use Plugin\VatValidation\Dto\TraderDataRequestDto;
-use Plugin\VatValidation\Dto\TraderDataResponseDto;
+use Plugin\VatValidation\Struct\TraderStruct;
 
-class CheckVatService implements CheckVatServiceInterface
+class CheckVatService implements CheckVatInterface
 {
     private TraderDataRequestDto $traderDataRequestDto;
+
+    private TraderStruct $traderStruct;
 
     private ClientInterface $client;
 
@@ -21,9 +23,10 @@ class CheckVatService implements CheckVatServiceInterface
     {
         $this->client = $client;
         $this->traderDataRequestDto = new TraderDataRequestDto();
+        $this->traderStruct = new TraderStruct();
     }
 
-    public function fetchTraderData(string $requestedVatId): ?TraderDataResponseDto
+    public function fetchTraderData(string $requestedVatId): TraderStruct
     {
         $vatId = str_replace(array(' ', '.', '-', ',', ', '), '', trim($requestedVatId));
         $countryCode = substr($vatId, 0, 2);
@@ -32,6 +35,11 @@ class CheckVatService implements CheckVatServiceInterface
         $this->traderDataRequestDto->setCountryCode($countryCode);
         $this->traderDataRequestDto->setVatNumber($vatNumber);
 
-        return $this->client->check($this->traderDataRequestDto);
+        $traderData = $this->client->check($this->traderDataRequestDto);
+
+        $this->traderStruct->setTraderName($traderData->traderName);
+        $this->traderStruct->setTraderAddress($traderData->traderAddress);
+
+        return $this->traderStruct;
     }
 }
