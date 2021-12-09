@@ -3,6 +3,7 @@
 
 # 0.6.0
 - Systemdateien bearbeiten, Plugin umbenennen
+- Erforderliches von Controller-Informationen zur OpenApi-Dokumentation
 
 # 0.5.0
 - Erforderliches Feld für Mehrwertsteuer in der Plugin-Konfiguration hinzugefügt

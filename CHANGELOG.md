@@ -3,6 +3,7 @@
 
 # 0.6.0
 - Edit system files, rename plugin
+- Add controller information to OpenApi Documentation
 
 # 0.5.0
 - Add required field for vat in plugin configuration
