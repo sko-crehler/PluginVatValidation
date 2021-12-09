@@ -10,9 +10,9 @@ namespace Plugin\VatValidation\Dto;
 
 class TraderDataResponseDto
 {
-    protected string $traderName;
+    public string $traderName;
 
-    protected string $traderAddress;
+    public string $traderAddress;
 
     /**
      * @return string
