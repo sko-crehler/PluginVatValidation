@@ -1,5 +1,5 @@
 # 1.0.0
-- Adding copyright to source code files
+- Add copyright to source code files
 
 # 0.6.0
 - Edit system files, rename plugin

@@ -1,5 +1,5 @@
 # 1.0.0
-- Hinzufügen von Copyright zu Quellcode-Dateien
+- Erforderliches von Copyright zu Quellcode-Dateien
 
 # 0.6.0
 - Systemdateien bearbeiten, Plugin umbenennen
