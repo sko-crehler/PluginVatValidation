@@ -8,54 +8,30 @@
 
 namespace Plugin\VatValidation\Service;
 
+use Plugin\VatValidation\Dto\TraderDataRequestDto;
 use Plugin\VatValidation\Dto\TraderDataResponseDto;
-use Plugin\VatValidation\Exception\CompanyNoInformationException;
-use Plugin\VatValidation\Exception\CompanyNotValidException;
-use Plugin\VatValidation\Exception\ConnectErrorException;
-use SoapClient;
-use SoapFault;
 
-class CheckVatService
+class CheckVatService implements CheckVatServiceInterface
 {
-    private const EC_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
+    private TraderDataRequestDto $traderDataRequestDto;
 
-    private TraderDataResponseDto $traderDataResponseDto;
+    private ClientInterface $client;
 
-    public function __construct()
+    public function __construct(ClientInterface $client)
     {
-        $this->traderDataResponseDto = new TraderDataResponseDto();
+        $this->client = $client;
+        $this->traderDataRequestDto = new TraderDataRequestDto();
     }
 
-    public function fetchTraderData(string $requestedVatId): TraderDataResponseDto
+    public function fetchTraderData(string $requestedVatId): ?TraderDataResponseDto
     {
-        $client = new SoapClient(self::EC_URL);
-
-        if (!$client) {
-            throw new ConnectErrorException();
-        }
-
         $vatId = str_replace(array(' ', '.', '-', ',', ', '), '', trim($requestedVatId));
         $countryCode = substr($vatId, 0, 2);
         $vatNumber = substr($vatId, 2);
-        $params = array('countryCode' => $countryCode, 'vatNumber' => $vatNumber);
 
-        try {
-            $loadedTrader = $client->checkVat($params);
+        $this->traderDataRequestDto->setCountryCode($countryCode);
+        $this->traderDataRequestDto->setVatNumber($vatNumber);
 
-            if (!$loadedTrader->valid) {
-                throw new CompanyNotValidException();
-            }
-
-            if ($loadedTrader->name === "---" || $loadedTrader->address === "---") {
-                throw new CompanyNoInformationException();
-            }
-
-            $this->traderDataResponseDto->setTraderName($loadedTrader->name);
-            $this->traderDataResponseDto->setTraderAddress($loadedTrader->address);
-
-            return $this->traderDataResponseDto;
-        } catch (SoapFault $e) {
-            throw new ConnectErrorException($e->getMessage());
-        }
+        return $this->client->check($this->traderDataRequestDto);
     }
 }

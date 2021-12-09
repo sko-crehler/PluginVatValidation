@@ -9,7 +9,7 @@
 namespace Plugin\VatValidation\Controller;
 
 use OpenApi\Annotations as OA;
-use Plugin\VatValidation\Service\CheckVatService;
+use Plugin\VatValidation\Service\CheckVatServiceInterface;
 use Shopware\Core\Framework\Routing\Annotation\RouteScope;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,9 +20,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class CheckVatController extends AbstractController
 {
-    private CheckVatService $checkVatService;
+    private CheckVatServiceInterface $checkVatService;
 
-    public function __construct(CheckVatService $checkVatService)
+    public function __construct(CheckVatServiceInterface $checkVatService)
     {
         $this->checkVatService = $checkVatService;
     }
