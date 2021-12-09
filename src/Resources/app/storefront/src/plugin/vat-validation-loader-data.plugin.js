@@ -35,13 +35,11 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
         const value = field.value.trim();
         const { isValid, country } = checkVAT(value, countries);
 
-        if (!isValid) {
-            return;
+        if (isValid) {
+            this._resetAllCompanyRegistrationValues();
+            this._fetchData(value);
+            this._setSelectOption(this.$companyCountry, country.name)
         }
-
-        this._resetAllCompanyRegistrationValues();
-        this._fetchData(value);
-        this._setSelectOption(this.$companyCountry, country.name)
     }
 
     _fetchData(vatId) {
