@@ -13,5 +13,5 @@ use Plugin\VatValidation\Struct\TraderStruct;
 
 interface CheckVatInterface
 {
-    public function fetchTraderData(string $requestedVatId): ?TraderStruct;
+    public function getTraderData(string $requestVatId): ?TraderStruct;
 }
