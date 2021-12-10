@@ -9,7 +9,7 @@ European VAT Reg.No. Validation integration plugin for [Shopware 6](https://gith
 ## Preview
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pietrzakadrian/PluginVatValidation/development/.github/plugin-vat-validation-review.gif?token=AIPOPJ3XWTXB2E5Y6CTRXPDBWFSFM">
+  <img src="https://raw.githubusercontent.com/pietrzakadrian/PluginVatValidation/production/.github/plugin-vat-validation-preview.gif">
 </p>
 
 ## License
