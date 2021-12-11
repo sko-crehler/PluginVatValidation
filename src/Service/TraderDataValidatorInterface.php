@@ -6,13 +6,13 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Plugin\VatValidation\Service;
 
-use Plugin\VatValidation\Dto\TraderDataRequestDto;
-use Plugin\VatValidation\Dto\TraderDataResponseDto;
-
-interface ClientInterface
+interface TraderDataValidatorInterface
 {
-    public function check(TraderDataRequestDto $traderDataRequestDto): TraderDataResponseDto;
+    public function isCompanyNameValid(string $name): bool;
+
+    public function isCompanyAddressValid(string $address): bool;
+
+    public function isCompanyValid(bool $valid): bool;
 }

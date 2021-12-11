@@ -46,6 +46,12 @@ class CheckVatController extends AbstractController
      *         description="Details of the Company Data",
      *         @OA\JsonContent(
      *              @OA\Property(
+     *                  property="apiAlias",
+     *                  type="string",
+     *                  example="plugin_vat_validation_struct_trader_struct",
+     *                  description="Api alias"
+     *              ),
+     *              @OA\Property(
      *                  property="traderName",
      *                  type="string",
      *                  example="COMPANY GmbH",

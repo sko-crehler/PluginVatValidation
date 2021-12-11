@@ -6,12 +6,11 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Plugin\VatValidation\Service;
 
 use Plugin\VatValidation\Struct\TraderStruct;
 
 interface CheckVatInterface
 {
-    public function getTraderData(string $requestVatId): ?TraderStruct;
+    public function handleTraderData(string $requestVatId): ?TraderStruct;
 }

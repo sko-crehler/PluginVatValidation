@@ -9,8 +9,13 @@
 
         </service>
 
+        <service id="Plugin\VatValidation\Service\TraderDataValidator">
+
+        </service>
+
         <service id="Plugin\VatValidation\Service\CheckVatService">
             <argument type="service" id="Plugin\VatValidation\Service\Client" />
+            <argument type="service" id="Plugin\VatValidation\Service\TraderDataValidator" />
         </service>
 
         <service id="Plugin\VatValidation\Controller\CheckVatController" public="true">

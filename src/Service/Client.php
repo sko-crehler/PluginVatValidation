@@ -10,8 +10,6 @@ namespace Plugin\VatValidation\Service;
 
 use SoapClient;
 use SoapFault;
-use Plugin\VatValidation\Exception\CompanyNoInformationException;
-use Plugin\VatValidation\Exception\CompanyNotValidException;
 use Plugin\VatValidation\Exception\ConnectErrorException;
 use Plugin\VatValidation\Dto\TraderDataRequestDto;
 use Plugin\VatValidation\Dto\TraderDataResponseDto;
@@ -27,7 +25,7 @@ class Client implements ClientInterface
         $this->traderDataResponseDto = new TraderDataResponseDto();
     }
 
-    public function check(TraderDataRequestDto $traderDataRequestDto): ?TraderDataResponseDto
+    public function check(TraderDataRequestDto $traderDataRequestDto): TraderDataResponseDto
     {
         $client = new SoapClient(self::EC_URL);
 
@@ -38,16 +36,12 @@ class Client implements ClientInterface
         try {
             $loadedTrader = $client->checkVat($traderDataRequestDto);
 
-            if (!$loadedTrader->valid) {
-                throw new CompanyNotValidException();
-            }
-
-            if ($loadedTrader->name === "---" || $loadedTrader->address === "---") {
-                throw new CompanyNoInformationException();
-            }
-
-            $this->traderDataResponseDto->setTraderName($loadedTrader->name);
-            $this->traderDataResponseDto->setTraderAddress($loadedTrader->address);
+            $this->traderDataResponseDto->setName($loadedTrader->name);
+            $this->traderDataResponseDto->setAddress($loadedTrader->address);
+            $this->traderDataResponseDto->setVatNumber($loadedTrader->vatNumber);
+            $this->traderDataResponseDto->setRequestDate($loadedTrader->requestDate);
+            $this->traderDataResponseDto->setValid($loadedTrader->valid);
+            $this->traderDataResponseDto->setCountryCode($loadedTrader->countryCode);
 
             return $this->traderDataResponseDto;
         } catch (SoapFault $e) {

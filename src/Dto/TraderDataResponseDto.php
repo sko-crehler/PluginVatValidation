@@ -10,39 +10,111 @@ namespace Plugin\VatValidation\Dto;
 
 class TraderDataResponseDto
 {
-    public string $traderName;
+    public string $name;
 
-    public string $traderAddress;
+    public string $address;
 
-    /**
-     * @return string
-     */
-    public function getTraderName(): string
-    {
-        return $this->traderName;
-    }
+    public string $countryCode;
 
-    /**
-     * @param string $traderName
-     */
-    public function setTraderName(string $traderName): void
-    {
-        $this->traderName = $traderName;
-    }
+    public string $vatNumber;
+
+    public string $requestDate;
+
+    public bool $valid;
 
     /**
      * @return string
      */
-    public function getTraderAddress(): string
+    public function getName(): string
     {
-        return $this->traderAddress;
+        return $this->name;
     }
 
     /**
-     * @param string $traderAddress
+     * @param string $name
      */
-    public function setTraderAddress(string $traderAddress): void
+    public function setName(string $name): void
     {
-        $this->traderAddress = $traderAddress;
+        $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountryCode(): string
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * @param string $countryCode
+     */
+    public function setCountryCode(string $countryCode): void
+    {
+        $this->countryCode = $countryCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVatNumber(): string
+    {
+        return $this->vatNumber;
+    }
+
+    /**
+     * @param string $vatNumber
+     */
+    public function setVatNumber(string $vatNumber): void
+    {
+        $this->vatNumber = $vatNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestDate(): string
+    {
+        return $this->requestDate;
+    }
+
+    /**
+     * @param string $requestDate
+     */
+    public function setRequestDate(string $requestDate): void
+    {
+        $this->requestDate = $requestDate;
+    }
+
+    /**
+     * @param bool $valid
+     */
+    public function setValid(bool $valid): void
+    {
+        $this->valid = $valid;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->valid;
     }
 }
