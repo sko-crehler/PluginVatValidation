@@ -70,6 +70,6 @@ class CheckVatController extends AbstractController
      */
     public function checkVat(string $vatId): VatValidationResponse
     {
-        return new VatValidationResponse($this->checkVatService->getTraderData($vatId));
+        return new VatValidationResponse($this->checkVatService->handleTraderData($vatId));
     }
 }

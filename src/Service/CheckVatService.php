@@ -32,7 +32,7 @@ class CheckVatService implements CheckVatInterface
         $this->traderStruct = new TraderStruct();
     }
 
-    public function handleTraderData(string $requestVatId): ?TraderStruct
+    public function handleTraderData(string $requestVatId): TraderStruct
     {
         $traderData = $this->fetchTraderData($requestVatId);
 
@@ -62,9 +62,8 @@ class CheckVatService implements CheckVatInterface
     }
 
     private function validateTraderData(TraderDataResponseDto $traderDataResponseDto): void {
-        if ($this->traderDataValidator->isCompanyAddressValid($traderDataResponseDto->getAddress()))
-        {
-            throw new CompanyNotValidException();
+        if (!$this->traderDataValidator->isCompanyAddressValid($traderDataResponseDto->getAddress())) {
+            throw new CompanyNoInformationException();
         }
 
         if (!$this->traderDataValidator->isCompanyNameValid($traderDataResponseDto->getName())) {
