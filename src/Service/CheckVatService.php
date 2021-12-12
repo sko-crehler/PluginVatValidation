@@ -14,7 +14,7 @@ use Plugin\VatValidation\Exception\CompanyNoInformationException;
 use Plugin\VatValidation\Exception\CompanyNotValidException;
 use Plugin\VatValidation\Struct\TraderStruct;
 
-class CheckVatService implements CheckVatInterface
+class CheckVatService implements CheckVatServiceInterface
 {
     private TraderDataRequestDto $traderDataRequestDto;
 
@@ -35,7 +35,6 @@ class CheckVatService implements CheckVatInterface
     public function handleTraderData(string $requestVatId): TraderStruct
     {
         $traderData = $this->fetchTraderData($requestVatId);
-
         $this->validateTraderData($traderData);
 
         return $this->saveTraderData($traderData);

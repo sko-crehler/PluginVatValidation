@@ -10,7 +10,7 @@ namespace Plugin\VatValidation\Service;
 
 use Plugin\VatValidation\Struct\TraderStruct;
 
-interface CheckVatInterface
+interface CheckVatServiceInterface
 {
     public function handleTraderData(string $requestVatId): TraderStruct;
 }
