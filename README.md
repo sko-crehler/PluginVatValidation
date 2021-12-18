@@ -1,7 +1,9 @@
 # PluginVatValidation
+
 ## Description
 
 European VAT Reg.No. Validation integration plugin for [Shopware 6](https://github.com/shopware/platform).
+
 - Checks if the VAT Reg.No. entered is according to the correct format.
 - Automatically enters data into the company name and address fields from the VIES.
 - Allows you to set the required field for vat number.
@@ -9,7 +11,7 @@ European VAT Reg.No. Validation integration plugin for [Shopware 6](https://gith
 ## Preview
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pietrzakadrian/PluginVatValidation/production/.github/plugin-vat-validation-preview.gif">
+  <img src="https://pietrzakadrian.com/1a633aa453c9a2e09bce0764e8e36435/preview2.gif">
 </p>
 
 ## License
