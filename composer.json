@@ -12,6 +12,11 @@
       "Plugin\\VatValidation\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Plugin\\VatValidation\\Test\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Adrian Pietrzak",
