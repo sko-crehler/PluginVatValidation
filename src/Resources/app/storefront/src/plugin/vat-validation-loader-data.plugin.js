@@ -60,7 +60,7 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
 
     _parseData(response) {
         const { traderName, traderAddress } = JSON.parse(response);
-        const formattedTraderAddress = traderAddress.replace(/\n/g, ', ');
+        const formattedTraderAddress = traderAddress.replace('\n', ', ');
         const [, address, zipCode, city] = formattedTraderAddress.match(/^([^,]+), (\S+) ([^,]+)$/);
 
         this._setInputValue(this.$companyName, traderName);
@@ -70,10 +70,12 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
     }
 
     _resetAllCompanyRegistrationValues() {
-        this._resetInputValue(this.$companyName);
-        this._resetInputValue(this.$companyAddress);
-        this._resetInputValue(this.$companyZipcode);
-        this._resetInputValue(this.$companyCity);
+        const elements = [this.$companyName, this.$companyAddress, this.$companyZipcode, this.$companyCity];
+
+        elements.forEach(element => {
+            this._resetInputValue(element);
+        })
+
         this._resetSelectOption(this.$companyCountry);
     }
 
