@@ -1,6 +1,6 @@
 # PluginVatValidation
 
-This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link. Make sure you read it.
+This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link. Make sure you read it.
 
 ## Description
 
@@ -18,7 +18,7 @@ European VAT Reg.No. Validation integration plugin for [Shopware 6](https://gith
 
 ## FAQ
 
-### The VAT-ID is not being recognized.
+**1. The VAT-ID is not being recognized.**
 
 The VAT-ID is verified live by contacting the VIES servers which are only available during 5:00 AM and 11:00 PM.
 
