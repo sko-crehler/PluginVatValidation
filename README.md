@@ -1,6 +1,6 @@
 # PluginVatValidation
 
-This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link. Make sure you read it.
+<sub>_This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link._</sub>
 
 ## Description
 
