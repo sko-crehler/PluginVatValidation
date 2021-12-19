@@ -1,6 +1,6 @@
 # PluginVatValidation
 
-<sub>**Note**: _This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link._</sub>
+<sub>_**Note**: This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link._</sub>
 
 ## Description
 
@@ -18,9 +18,9 @@ European VAT Reg.No. Validation integration plugin for [Shopware 6](https://gith
 
 ## FAQ
 
-**The VAT-ID is not being recognized.**
+**The VAT Reg.No is not being recognized.**
 
-The VAT-ID is verified live by contacting the VIES servers which are only available during 5:00 AM and 11:00 PM.
+The VAT Reg.No. is verified live by contacting the VIES servers which are only available during 5:00 AM and 11:00 PM.
 
 Please make sure that the company information data is entered in the online form exactly as it has been registered. You can check the exact registration information for your company via [this](https://ec.europa.eu/taxation_customs/vies/vatResponse.html?locale=en) link.
 
