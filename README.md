@@ -18,7 +18,7 @@ European VAT Reg.No. Validation integration plugin for [Shopware 6](https://gith
 
 ## FAQ
 
-**1. The VAT-ID is not being recognized.**
+**The VAT-ID is not being recognized.**
 
 The VAT-ID is verified live by contacting the VIES servers which are only available during 5:00 AM and 11:00 PM.
 
