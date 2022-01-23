@@ -1,4 +1,6 @@
-# PluginVatValidation
+<img align="right" alt="Shopware 6 icon" src="https://crehler.com/uploads/media/1920x/07/237-shopware-6-icon.png" width="auto" height="70px">
+
+## European VAT Reg.No. Validation integration plugin for Shopware 6
 
 <sub>_**Note**: This plugin is described in detail on the author's software engineering blog. The article can be found at [this](https://pietrzakadrian.com/blog/accelerate-the-purchasing-process-in-e-commerce-based-on-shopware-6) link._</sub>
 
