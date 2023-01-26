@@ -39,12 +39,11 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
 
         if (isValid) {
             this._resetAllCompanyRegistrationValues();
-            void this._fetchData(value);
-            this._setSelectOption(this.$companyCountry, country.name);
+            void this._fetchData(value, country);
         }
     }
 
-    _fetchData(vatId) {
+    _fetchData(vatId, {name}) {
         ElementLoadingIndicatorUtil.create(this.$companyVatId.parentNode);
 
         return new Promise((resolve, reject) => {
@@ -56,6 +55,9 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
                 }
 
                 this._parseData(response);
+                this._setSelectOption(this.$companyCountry, name);
+
+                resolve();
             });
         });
     }
