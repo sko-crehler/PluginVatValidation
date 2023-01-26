@@ -3,22 +3,7 @@ import { checkVAT, countries } from 'jsvat';
 
 export default class FormVatValidationPlugin extends FormValidation {
     static options = {
-        stylingEnabled: true,
-
-        styleCls: 'was-validated',
-
-        hintCls: 'invalid-feedback',
-
-        debounceTime: '150',
-
-        eventName: 'ValidateEqual',
-
-        equalAttr: 'data-form-validation-equal',
-
-        lengthAttr: 'data-form-validation-length',
-
-        lengthTextAttr: 'data-form-validation-length-text',
-
+        ...FormValidation.options,
         vatAttr: 'data-form-validation-vat-valid',
     };
 
