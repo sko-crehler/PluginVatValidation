@@ -1,0 +1,14 @@
+{% block sw_customer_detail_base_info_card %}
+    {% parent() %}
+    <sw-grid :items="pkdCodes" v-if="areCodesReady" class="pkd-table">
+        <template #columns="{ item }">
+            <sw-grid-column flex="minmax(100px, 1fr)" label="Lp.">
+                {{ item.number }}
+            </sw-grid-column>
+
+            <sw-grid-column flex="minmax(100px, 1fr)" label="Kod PKD">
+                {{ item.code }}
+            </sw-grid-column>
+        </template>
+    </sw-grid>
+{% endblock %}

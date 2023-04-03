@@ -6,15 +6,40 @@
 
     <services>
         <service id="Plugin\VatValidation\Service\Client">
-
+            <tag name="cr.vat_data_provider" priority="1"/>
+            <argument type="service" id="logger"/>
         </service>
 
-        <service id="Plugin\VatValidation\Service\TraderDataValidator">
+        <service id="Plugin\VatValidation\Service\CeidgProvider">
+            <tag name="cr.vat_data_provider" priority="2"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="logger"/>
+        </service>
 
+        <service id="Plugin\VatValidation\Service\TraderPkdProvider">
+            <tag name="cr.pkd_provider" priority="1"/>
+            <argument type="service" id="customer.repository"/>
+            <argument type="service" id="logger"/>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+        </service>
+
+        <service id="Plugin\VatValidation\Subscriber\TraderPkdSubscriber">
+            <argument type="tagged_iterator" tag="cr.pkd_provider"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="Plugin\VatValidation\Service\TraderDataValidator"/>
+
+        <service id="Plugin\VatValidation\Extension\Checkout\Customer\TraderPkdExtension">
+            <tag name="shopware.entity.extension"/>
+        </service>
+
+        <service id="Plugin\VatValidation\Extension\Checkout\Customer\TraderPkdDefinition">
+            <tag name="shopware.entity.definition" entity="customer_pkd" />
         </service>
 
         <service id="Plugin\VatValidation\Service\CheckVatService">
-            <argument type="service" id="Plugin\VatValidation\Service\Client" />
+            <argument type="tagged_iterator" tag="cr.vat_data_provider"/>
             <argument type="service" id="Plugin\VatValidation\Service\TraderDataValidator" />
         </service>
 

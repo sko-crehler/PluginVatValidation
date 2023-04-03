@@ -24,4 +24,17 @@
             <defaultValue>true</defaultValue>
         </input-field>
     </card>
+
+    <card>
+        <title>CEIDG data warehouse and Biznes.gov.pl</title>
+        <title lang="de-DE">CEIDG-Datenlager und Biznes.gov.pl</title>
+        <title lang="pl-PL">Hurtownia danych CEIDG i Biznes.gov.pl</title>
+
+        <input-field type="text">
+            <name>apiKey</name>
+            <label>API Key</label>
+            <label lang="de-DE">API-Schlüssel</label>
+            <label lang="pl-PL">Klucz API</label>
+        </input-field>
+    </card>
 </config>

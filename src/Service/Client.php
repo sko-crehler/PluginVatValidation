@@ -8,30 +8,29 @@
 
 namespace Plugin\VatValidation\Service;
 
-use SoapClient;
+use Plugin\VatValidation\Util\TimeoutSoapClient;
+use Psr\Log\LoggerInterface;
 use SoapFault;
 use Plugin\VatValidation\Exception\ConnectErrorException;
 use Plugin\VatValidation\Dto\TraderDataRequestDto;
 use Plugin\VatValidation\Dto\TraderDataResponseDto;
 
-class Client implements ClientInterface
+class Client implements VatDataProviderInterface
 {
     private const EC_URL = 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
     private TraderDataResponseDto $traderDataResponseDto;
+    private LoggerInterface $logger;
 
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
         $this->traderDataResponseDto = new TraderDataResponseDto();
+        $this->logger = $logger;
     }
 
-    public function check(TraderDataRequestDto $traderDataRequestDto): TraderDataResponseDto
+    public function check(TraderDataRequestDto $traderDataRequestDto): ?TraderDataResponseDto
     {
-        $client = new SoapClient(self::EC_URL);
-
-        if (!$client) {
-            throw new ConnectErrorException();
-        }
+        $client = new TimeoutSoapClient(self::EC_URL);
 
         try {
             $loadedTrader = $client->checkVat($traderDataRequestDto);
@@ -45,7 +44,9 @@ class Client implements ClientInterface
 
             return $this->traderDataResponseDto;
         } catch (SoapFault $e) {
-            throw new ConnectErrorException($e->getMessage());
+            $error = new ConnectErrorException($e->getMessage());
+            $this->logger->error($error->getMessage());
         }
+        return null;
     }
 }

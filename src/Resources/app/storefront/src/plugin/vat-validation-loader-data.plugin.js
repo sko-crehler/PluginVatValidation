@@ -14,6 +14,7 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
         companyZipcodeSelector: "#billingAddressAddressZipcode",
         companyCitySelector: "#billingAddressAddressCity",
         companyCountrySelector: "#billingAddressAddressCountry",
+        vatValidTextSelector: '[data-form-validation-vat-valid-text="true"]'
     };
 
     init() {
@@ -24,6 +25,8 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
         this.$companyZipcode = DomAccess.querySelector(this.el, this.options.companyZipcodeSelector);
         this.$companyCity = DomAccess.querySelector(this.el, this.options.companyCitySelector);
         this.$companyCountry = DomAccess.querySelector(this.el, this.options.companyCountrySelector);
+        this.$vatValidText = DomAccess.querySelector(this.el, this.options.vatValidTextSelector);
+        this.$previousVatValidText = this.$vatValidText.innerText;
 
         this._registerEvents();
     }
@@ -51,15 +54,32 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
                 ElementLoadingIndicatorUtil.remove(this.$companyVatId.parentNode);
 
                 if (request.status >= 400) {
-                    reject(`Failed to parse vat validation info from VIES response`)
+                    this._handleVatValidText(false);
+                    reject(`Failed to parse vat validation info from VIES response`);
+                    return;
                 }
 
+                this._handleVatValidText(true);
                 this._parseData(response);
                 this._setSelectOption(this.$companyCountry, name);
 
                 resolve();
             });
         });
+    }
+
+    _handleVatValidText(isVatValid) {
+        if (isVatValid) {
+            this.$vatValidText.innerText = this.$previousVatValidText;
+            this.$vatValidText.style.color = 'inherit';
+        } else {
+            const invalidVatSnippet = 'Przepraszamy, centralna baza ewidencji jest tymczasowo niedostępna. Wprowadź dane ręcznie';
+            if (invalidVatSnippet !== this.$vatValidText.innerText) {
+                this.$previousVatValidText = this.$vatValidText.innerText;
+                this.$vatValidText.style.color = 'red';
+                this.$vatValidText.innerText = invalidVatSnippet;
+            }
+        }
     }
 
     _parseData(response) {

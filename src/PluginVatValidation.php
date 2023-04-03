@@ -12,4 +12,5 @@ use Shopware\Core\Framework\Plugin;
 
 class PluginVatValidation extends Plugin
 {
+    public const CEIDG_API_BASE_URL = 'https://dane.biznes.gov.pl/api/ceidg/v2/';
 }

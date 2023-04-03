@@ -22,11 +22,11 @@ class CheckVatService implements CheckVatServiceInterface
 
     private TraderStruct $traderStruct;
 
-    private ClientInterface $client;
+    private array $providers;
 
-    public function __construct(ClientInterface $client, TraderDataValidatorInterface $traderDataValidator)
+    public function __construct(iterable $providers, TraderDataValidatorInterface $traderDataValidator)
     {
-        $this->client = $client;
+        $this->providers = $providers instanceof \Traversable ? iterator_to_array($providers) : $providers;
         $this->traderDataValidator = $traderDataValidator;
         $this->traderDataRequestDto = new TraderDataRequestDto();
         $this->traderStruct = new TraderStruct();
@@ -49,7 +49,13 @@ class CheckVatService implements CheckVatServiceInterface
         $this->traderDataRequestDto->setCountryCode($countryCode);
         $this->traderDataRequestDto->setVatNumber($vatNumber);
 
-        return $this->client->check($this->traderDataRequestDto);
+        foreach ($this->providers as $provider) {
+            if (($responseDto = $provider->check($this->traderDataRequestDto)) instanceof TraderDataResponseDto) {
+                return $responseDto;
+            }
+        }
+
+        throw new CompanyNoInformationException();
     }
 
     private function saveTraderData(TraderDataResponseDto $traderDataResponseDto): TraderStruct
