@@ -1,6 +1,7 @@
 {
     "pluginVatValidation": {
         "smallTip": "A properly entered VAT Reg.No. should automatically populate the company name and address.",
+        "invalidVat": "Sorry, the central records database is temporarily unavailable. Enter the data manually",
         "address": {
             "companyVatPlaceholder": "Enter VAT Reg.No....",
             "companyVatRequired":"VAT Reg.No. must be entered in the appropriate format, e.g: PLXXXXXXXXXX."

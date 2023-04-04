@@ -71,14 +71,11 @@ export default class VatValidationLoaderDataPlugin extends Plugin {
     _handleVatValidText(isVatValid) {
         if (isVatValid) {
             this.$vatValidText.innerText = this.$previousVatValidText;
-            this.$vatValidText.style.color = 'inherit';
-        } else {
-            const invalidVatSnippet = 'Przepraszamy, centralna baza ewidencji jest tymczasowo niedostępna. Wprowadź dane ręcznie';
-            if (invalidVatSnippet !== this.$vatValidText.innerText) {
-                this.$previousVatValidText = this.$vatValidText.innerText;
-                this.$vatValidText.style.color = 'red';
-                this.$vatValidText.innerText = invalidVatSnippet;
-            }
+            this.$vatValidText.classList.remove('text-danger');
+        } else if (window.invalidVatSnippet !== this.$vatValidText.innerText) {
+            this.$previousVatValidText = this.$vatValidText.innerText;
+            this.$vatValidText.classList.add('text-danger');
+            this.$vatValidText.innerText = window.invalidVatSnippet;
         }
     }
 

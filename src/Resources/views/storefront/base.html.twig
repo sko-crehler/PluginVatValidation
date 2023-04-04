@@ -1,0 +1,6 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_body_script %}
+    {{ parent() }}
+    <script>window.invalidVatSnippet = '{{"pluginVatValidation.invalidVat"|trans}}';</script>
+{% endblock %}

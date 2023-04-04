@@ -1,6 +1,7 @@
 {
     "pluginVatValidation": {
         "smallTip": "Prawidłowo wpisany numer NIP powinien automatycznie uzupełnić nazwę i adres firmy.",
+        "invalidVat": "Przepraszamy, centralna baza ewidencji jest tymczasowo niedostępna. Wprowadź dane ręcznie",
         "address": {
             "companyVatPlaceholder": "Wprowadź numer NIP...",
             "companyVatRequired":"Numer NIP musi być wprowadzony w odpowiednim formacie, np: PLXXXXXXXXXX."

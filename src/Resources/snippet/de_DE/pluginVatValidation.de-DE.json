@@ -1,6 +1,7 @@
 {
     "pluginVatValidation": {
         "smallTip": "Eine korrekt eingegebene Umsatzsteuer-Identifikationsnummer sollte automatisch den Namen und die Adresse des Unternehmens ausfüllen.",
+        "invalidVat": "Entschuldigung, die zentrale Datensatzdatenbank ist vorübergehend nicht verfügbar. Geben Sie die Daten manuell ein",
         "address": {
             "companyVatPlaceholder": "Umsatzsteuer-Identifikationsnummer eingeben....",
             "companyVatRequired":"Die Umsatzsteuer-Identifikationsnummer muss in dem entsprechenden Format eingegeben werden, z. B: DEXXXXXXXXX."
