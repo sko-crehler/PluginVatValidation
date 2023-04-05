@@ -2,5 +2,5 @@
 
 {% block base_body_script %}
     {{ parent() }}
-    <script>window.invalidVatSnippet = '{{"pluginVatValidation.invalidVat"|trans}}';</script>
+    <script>window.invalidVatSnippet = '{{ 'pluginVatValidation.invalidVat'|trans|e('js') }}';</script>
 {% endblock %}
