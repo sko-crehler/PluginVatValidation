@@ -43,11 +43,49 @@ class CeidgProvider implements VatDataProviderInterface
                 return null;
             }
             $response = json_decode($response->getBody(), true);
-            return $this->parseTraderData($response['firma'][0]);
+            $company = $this->selectActiveCompany($response['firma']);
+            if ($company === null) return null;
+            $validAddressKey = $this->getValidCompanyAddressKey($company);
+            if ($validAddressKey === null) {
+                return null;
+            }
+            return $this->parseTraderData($company, $validAddressKey);
         } catch (\Throwable $exception) {
             $this->logger->error($exception->getMessage());
         }
         return null;
+    }
+
+    private function selectActiveCompany(array $companies): ?array
+    {
+        foreach ($companies as $company) {
+            if ($company['status'] === 'AKTYWNY') {
+                return $company;
+            }
+        }
+        return null;
+    }
+
+    private function getValidCompanyAddressKey(array $company): ?string
+    {
+        $keys = ['adresDzialalnosci', 'adresKorespondencyjny'];
+        foreach ($keys as $key) {
+            if ($this->isAddressValid($company[$key])) {
+                return $key;
+            }
+        }
+        return null;
+    }
+
+    private function isAddressValid(array $companyAddress): bool
+    {
+        $keys = ['ulica', 'budynek', 'kod', 'miasto'];
+        foreach ($keys as $key) {
+            if (!isset($companyAddress[$key])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function companyAddressToString(array $companyAddress): string
@@ -61,13 +99,13 @@ class CeidgProvider implements VatDataProviderInterface
         );
     }
 
-    private function parseTraderData(array $company): TraderDataResponseDto
+    private function parseTraderData(array $company, string $validAddressKey): TraderDataResponseDto
     {
         $traderDataResponseDto = new TraderDataResponseDto();
 
         $traderDataResponseDto->setName($company['nazwa']);
-        $traderDataResponseDto->setAddress($this->companyAddressToString($company['adresDzialalnosci']));
-        $traderDataResponseDto->setCountryCode($company['adresDzialalnosci']['kraj']);
+        $traderDataResponseDto->setAddress($this->companyAddressToString($company[$validAddressKey]));
+        $traderDataResponseDto->setCountryCode($company[$validAddressKey]['kraj']);
         $traderDataResponseDto->setVatNumber($company['wlasciciel']['nip']);
         $traderDataResponseDto->setRequestDate((new \DateTime('now'))->format('Y-m-d H:i:s'));
         $traderDataResponseDto->setValid(true);
